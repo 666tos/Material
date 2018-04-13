@@ -9,7 +9,9 @@ Pod::Spec.new do |s|
  	s.source = { :git => 'https://github.com/CosmicMind/Material.git', :tag => s.version }
 
 	s.default_subspec = 'Core'
-	s.platform = :ios, '8.0'
+
+    s.ios.deployment_target = "10.1"
+    s.tvos.deployment_target = "10.1"
 
 	s.subspec 'Core' do |s|
 		s.ios.deployment_target = '8.0'
