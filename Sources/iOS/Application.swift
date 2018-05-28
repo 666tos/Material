@@ -43,7 +43,11 @@ public struct Application {
   
   /// A boolean indicating if the device is in Landscape mode.
   public static var isLandscape: Bool {
+    #if os(tvOS)
+    return true
+    #else
     return UIApplication.shared.statusBarOrientation.isLandscape
+    #endif
   }
   
   /// A boolean indicating if the device is in Portrait mode.
@@ -52,27 +56,43 @@ public struct Application {
   }
   
   /// The current UIInterfaceOrientation value.
-  public static var orientation: UIInterfaceOrientation {
-    return UIApplication.shared.statusBarOrientation
+  public static var orientation: InterfaceOrientation {
+    #if os(tvOS)
+    return .landscapeLeft
+    #else
+    return InterfaceOrientation(rawValue: UIApplication.shared.statusBarOrientation.rawValue) ?? .unknown
+    #endif
   }
   
   /// Retrieves the device status bar style.
-  public static var statusBarStyle: UIStatusBarStyle {
+  public static var statusBarStyle: StatusBarStyle {
     get {
-      return UIApplication.shared.statusBarStyle
+      #if os(tvOS)
+      return .default
+      #else
+      return StatusBarStyle(rawValue: UIApplication.shared.statusBarStyle.rawValue) ?? .default
+      #endif
     }
     set(value) {
-      UIApplication.shared.statusBarStyle = value
+      #if !os(tvOS)
+      UIApplication.shared.statusBarStyle = UIStatusBarStyle(rawValue: value.rawValue) ?? .default
+      #endif
     }
   }
   
   /// Retrieves the device status bar hidden state.
   public static var isStatusBarHidden: Bool {
     get {
+      #if os(tvOS)
+      return false
+      #else
       return UIApplication.shared.isStatusBarHidden
+      #endif
     }
     set(value) {
+      #if !os(tvOS)
       UIApplication.shared.isStatusBarHidden = value
+      #endif
     }
   }
   

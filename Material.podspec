@@ -14,14 +14,15 @@ Pod::Spec.new do |s|
     s.tvos.deployment_target = "10.1"
 
 	s.subspec 'Core' do |s|
-		s.ios.deployment_target = '8.0'
-		s.ios.source_files = 'Sources/**/*.swift'
+        s.ios.deployment_target = "10.1"
+        s.tvos.deployment_target = "10.1"
+		s.source_files = 'Sources/**/*.swift'
 		s.requires_arc = true
 		s.resource_bundles = {
 			'com.cosmicmind.material.icons' => ['Sources/**/*.xcassets'],
 			'com.cosmicmind.material.fonts' => ['Sources/**/*.ttf']
 		}
 
-		s.dependency 'Motion', '~> 1.3.0'
+		s.dependency 'Motion', '~> 1.4.0'
 	end
 end
