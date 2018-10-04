@@ -73,6 +73,36 @@ open class NavigationBar: UINavigationBar {
     }
   }
   
+    open var motion_backIndicatorImage: UIImage? {
+        get {
+            #if os(tvOS)
+            return nil
+            #else
+            return self.backIndicatorImage
+            #endif
+        }
+        set {
+            #if !os(tvOS)
+            self.backIndicatorImage = newValue
+            #endif
+        }
+    }
+    
+    open var motion_backIndicatorTransitionMaskImage: UIImage? {
+        get {
+            #if os(tvOS)
+            return nil
+            #else
+            return self.backIndicatorTransitionMaskImage
+            #endif
+        }
+        set {
+            #if !os(tvOS)
+            self.backIndicatorTransitionMaskImage = newValue
+            #endif
+        }
+    }
+
   /**
    The back button image writes to the backIndicatorImage property and
    backIndicatorTransitionMaskImage property.
@@ -80,12 +110,12 @@ open class NavigationBar: UINavigationBar {
   @IBInspectable
   open var backButtonImage: UIImage? {
     get {
-      return backIndicatorImage
+      return motion_backIndicatorImage
     }
     set(value) {
       let image: UIImage? = value
-      backIndicatorImage = image
-      backIndicatorTransitionMaskImage = image
+      motion_backIndicatorImage = image
+      motion_backIndicatorTransitionMaskImage = image
     }
   }
   
@@ -160,7 +190,9 @@ open class NavigationBar: UINavigationBar {
    when subclassing.
    */
   open func prepare() {
+    #if !os(tvOS)
     barStyle = .black
+    #endif
     isTranslucent = false
     depthPreset = .none
     contentScaleFactor = Screen.scale

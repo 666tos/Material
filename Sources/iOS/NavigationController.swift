@@ -33,7 +33,7 @@ import Motion
 
 extension NavigationController {
   /// Device status bar style.
-  open var statusBarStyle: UIStatusBarStyle {
+  open var statusBarStyle: StatusBarStyle {
     get {
       return Application.statusBarStyle
     }
@@ -72,6 +72,8 @@ open class NavigationController: UINavigationController {
   
   open override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    
+    #if !os(tvOS)
     guard let v = interactivePopGestureRecognizer else {
       return
     }
@@ -87,6 +89,7 @@ open class NavigationController: UINavigationController {
     if let r = x.rightPanGesture {
       r.require(toFail: v)
     }
+    #endif
   }
   
   open override func viewDidLoad() {
@@ -127,11 +130,13 @@ open class NavigationController: UINavigationController {
     view.backgroundColor = .white
     view.contentScaleFactor = Screen.scale
     
+    #if !os(tvOS)
     // This ensures the panning gesture is available when going back between views.
     if let v = interactivePopGestureRecognizer {
       v.isEnabled = true
       v.delegate = self
     }
+    #endif
   }
   
   /// Calls the layout functions for the view heirarchy.
@@ -164,8 +169,10 @@ extension NavigationController: UINavigationBarDelegate {
       
       item.backButton.addTarget(self, action: #selector(handle(backButton:)), for: .touchUpInside)
       
+    #if !os(tvOS)
       item.hidesBackButton = false
       item.setHidesBackButton(true, animated: false)
+    #endif
       
       v.layoutNavigationItem(item: item)
     }
@@ -199,6 +206,11 @@ extension NavigationController: UIGestureRecognizerDelegate {
    - Returns: A Boolean of whether to continue the gesture or not, true yes, false no.
    */
   public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    #if os(tvOS)
+    return true
+    #else
     return interactivePopGestureRecognizer == gestureRecognizer && nil != navigationBar.backItem
+    #endif
+    
   }
 }

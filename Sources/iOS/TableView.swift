@@ -68,7 +68,9 @@ open class TableView: UITableView {
   open func prepare() {
     backgroundColor = .white
     contentScaleFactor = Screen.scale
+    #if !os(tvOS)
     separatorStyle = .none
+    #endif
     register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
   }
 }

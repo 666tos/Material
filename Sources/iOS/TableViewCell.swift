@@ -169,7 +169,9 @@ open class TableViewCell: UITableViewCell, Pulseable, PulseableLayer {
    */
   open func prepare() {
     selectionStyle = .none
+    #if !os(tvOS)
     separatorInset = .zero
+    #endif
     contentScaleFactor = Screen.scale
     imageView?.isUserInteractionEnabled = false
     textLabel?.isUserInteractionEnabled = false

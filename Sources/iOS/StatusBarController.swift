@@ -54,7 +54,7 @@ open class StatusBarController: TransitionController {
   }
   
   /// Device status bar style.
-  open var statusBarStyle: UIStatusBarStyle {
+  open var statusBarStyle: StatusBarStyle {
     get {
       return Application.statusBarStyle
     }

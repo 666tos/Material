@@ -959,7 +959,11 @@ open class NavigationDrawerController: TransitionController {
         return
       }
       
+    #if os(tvOS)
+      v.windowLevel = UIWindowLevelAlert + 1
+    #else
       v.windowLevel = UIWindowLevelStatusBar + 1
+    #endif
       
       guard let `self` = self else {
         return

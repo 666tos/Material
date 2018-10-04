@@ -282,10 +282,12 @@ fileprivate extension TextView {
   /// Prepares the Notification handlers.
   func prepareNotificationHandlers() {
     let defaultCenter = NotificationCenter.default
+    #if !os(tvOS)
     defaultCenter.addObserver(self, selector: #selector(handleKeyboardWillShow(notification:)), name: .UIKeyboardWillShow, object: nil)
     defaultCenter.addObserver(self, selector: #selector(handleKeyboardWillHide(notification:)), name: .UIKeyboardWillHide, object: nil)
     defaultCenter.addObserver(self, selector: #selector(handleKeyboardDidShow(notification:)), name: .UIKeyboardDidShow, object: nil)
     defaultCenter.addObserver(self, selector: #selector(handleKeyboardDidHide(notification:)), name: .UIKeyboardDidHide, object: nil)
+    #endif
     defaultCenter.addObserver(self, selector: #selector(handleTextViewTextDidBegin), name: .UITextViewTextDidBeginEditing, object: self)
     defaultCenter.addObserver(self, selector: #selector(handleTextViewTextDidChange), name: .UITextViewTextDidChange, object: self)
     defaultCenter.addObserver(self, selector: #selector(handleTextViewTextDidEnd), name: .UITextViewTextDidEndEditing, object: self)
@@ -335,6 +337,8 @@ fileprivate extension TextView {
 }
 
 fileprivate extension TextView {
+    
+#if !os(tvOS)
   /**
    Handler for when the keyboard will open.
    - Parameter notification: A Notification.
@@ -406,6 +410,8 @@ fileprivate extension TextView {
     
     (delegate as? TextViewDelegate)?.textView?(textView: self, didHideKeyboard: v)
   }
+#endif
+    
   
   /// Notification handler for when text editing began.
   @objc
