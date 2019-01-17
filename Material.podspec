@@ -11,12 +11,12 @@ Pod::Spec.new do |s|
 
 	s.default_subspec = 'Core'
 
-    s.ios.deployment_target = "10.1"
-    s.tvos.deployment_target = "10.1"
+    s.ios.deployment_target = "9.0"
+    s.tvos.deployment_target = "10.2"
 
 	s.subspec 'Core' do |s|
-        s.ios.deployment_target = "10.1"
-        s.tvos.deployment_target = "10.1"
+        s.ios.deployment_target = "9.0"
+        s.tvos.deployment_target = "10.2"
 		s.source_files = 'Sources/**/*.swift'
 		s.requires_arc = true
 		s.resource_bundles = {
